@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 import numpy as np
+import random
+import time
 
-
-# Liczba przypisań i porównań jest podana za posortowaną tablicą
+# Liczba przypisań i porównań jest podana za posortowaną tablicą.
+# Chwilkę może trwać czas liczenia z powodu dużych danych.
 
 
 #zad1
@@ -49,7 +51,7 @@ print("Zadanie 1b: ", Insertion_Sort_Plus(B))
 #zad2
 
 C = [np.random.normal(0, 1) for _ in range(5)]
-#print(C)
+print(C)
 
 def Bubble_Sort(C):
     '''
@@ -83,7 +85,7 @@ print("Zadanie 2b: ", Bubble_Sort_Plus(C))
 #zad3
 
 D = [np.random.normal(0, 1) for _ in range(5)]
-print(D)
+#print(D)
 
 def Merge(D, p, s, k):
     '''
@@ -166,7 +168,7 @@ def Merge_Sort_Plus(D, p, k):
         Merge_Sort_Plus(D, p, q)
         Merge_Sort_Plus(D, q + 1, k)
         Merge_Plus(D, p, q, k)
-    return D
+    return D,przypisania,porównania
 
 print("Zadanie 3b: ", Merge_Sort_Plus(D, 0, len(D) - 1))
 print("Liczba przypisań: ", przypisania)
@@ -206,22 +208,128 @@ def Merge21(D2, p, s, k):
             przypisanie = przypisanie + 1
     return D2,przypisanie,porównanie 
 
-def Merge_Sort21(D2, p, k):
+def Merge_Sort21_Plus(D2, p, k):
     '''
     Algorytm sortowania. Zwraca liczbę porównań i 
     liczbę przypisań wykonanych w trakcie algorytmu. 
     '''
     if p < k:
-        q = (2*p + k) // 3
-        Merge_Sort21(D2, p, q)
-        Merge_Sort21(D2, q + 1, k)
+        q = p + (k - p) // 3
+        Merge_Sort21_Plus(D2, p, q)
+        Merge_Sort21_Plus(D2, q + 1, k)
         Merge21(D2, p, q, k)
-    return D2
+    return D2,przypisanie,porównanie
 
-print("Zadanie 4: ", Merge_Sort21(D2, 0, len(D2) - 1))
+print("Zadanie 4: ", Merge_Sort21_Plus(D2, 0, len(D2) - 1))
 print("Liczba przypisań: ", przypisanie)
 print("Liczba porównań: ", porównanie)
 
 
 #zad5
 
+def testIS():
+    '''
+    Testy dla Insertion Sort Plus
+    dla 1000, 10000, 20000.
+    '''
+    tablica1000 = np.array([random.randint(1, 1000) for x in range(1000)])
+    start= time.time()
+    lista,przypisanie,porównanie = Insertion_Sort_Plus(tablica1000)
+    koniec = time.time()
+    pomiar = koniec - start
+    tablica10000 = np.array([random.randint(1, 10000) for x in range(10000)])
+    start2 = time.time()
+    lista2,przypisanie2,porównanie2 = Insertion_Sort_Plus(tablica10000)
+    koniec2 = time.time()
+    pomiar2 = koniec2 - start2
+    tablica20000 = np.array([random.randint(1, 20000) for x in range(20000)])
+    start3 = time.time()
+    lista,przypisanie3,porównanie3 = Insertion_Sort_Plus(tablica20000)
+    koniec3 = time.time()
+    pomiar3 = koniec3 - start3
+    return np.array([[pomiar,przypisanie,porównanie],
+                    [pomiar2,przypisanie2,porównanie2],
+                    [pomiar3,przypisanie3,porównanie3]])
+
+
+def testBS():
+    '''
+    Testy dla Bubble Sort Plus
+    dla 1000, 10000, 20000.
+    '''
+    tablica1000 = np.array([random.randint(1, 1000) for x in range(1000)])
+    start= time.time()
+    lista,przypisanie,porównanie = Bubble_Sort_Plus(tablica1000)
+    koniec = time.time()
+    pomiar = koniec - start
+    tablica10000 = np.array([random.randint(1, 10000) for x in range(10000)])
+    start2 = time.time()
+    lista2,przypisanie2,porównanie2 = Bubble_Sort_Plus(tablica10000)
+    koniec2 = time.time()
+    pomiar2 = koniec2 - start2
+    tablica20000 = np.array([random.randint(1, 20000) for x in range(20000)])
+    start3 = time.time()
+    lista,przypisanie3,porównanie3 = Bubble_Sort_Plus(tablica20000)
+    koniec3 = time.time()
+    pomiar3 = koniec3 - start3
+    return np.array([[pomiar,przypisanie,porównanie],
+                    [pomiar2,przypisanie2,porównanie2],
+                    [pomiar3,przypisanie3,porównanie3]])
+
+def testMS():
+    '''
+    Testy dla Merge Sort Plus
+    dla 1000, 10000, 20000.
+    '''
+    tablica1000 = np.array([random.randint(1, 1000) for x in range(1000)])
+    start= time.time()
+    lista,przypisanie,porównanie = Merge_Sort_Plus(tablica1000, 0, len(tablica1000) - 1)
+    koniec = time.time()
+    pomiar = koniec - start
+    tablica10000 = np.array([random.randint(1, 10000) for x in range(10000)])
+    start2 = time.time()
+    lista2,przypisanie2,porównanie2 = Merge_Sort_Plus(tablica10000, 0, len(tablica10000) - 1)
+    koniec2 = time.time()
+    pomiar2 = koniec2 - start2
+    tablica20000 = np.array([random.randint(1, 20000) for x in range(20000)])
+    start3 = time.time()
+    lista,przypisanie3,porównanie3 = Merge_Sort_Plus(tablica20000, 0, len(tablica20000) - 1)
+    koniec3 = time.time()
+    pomiar3 = koniec3 - start3
+    return np.array([[pomiar,przypisanie,porównanie],
+                    [pomiar2,przypisanie2,porównanie2],
+                    [pomiar3,przypisanie3,porównanie3]])
+
+def testMS21():
+    '''
+    Testy dla Merge Sort21 Plus
+    dla 1000, 10000, 20000.
+    '''
+    tablica1000 = np.array([random.randint(1, 1000) for x in range(1000)])
+    start= time.time()
+    lista,przypisanie,porównanie = Merge_Sort21_Plus(tablica1000, 0, len(tablica1000) - 1)
+    koniec = time.time()
+    pomiar = koniec - start
+    tablica10000 = np.array([random.randint(1, 10000) for x in range(10000)])
+    start2 = time.time()
+    lista2,przypisanie2,porównanie2 = Merge_Sort21_Plus(tablica10000, 0, len(tablica10000) - 1)
+    koniec2 = time.time()
+    pomiar2 = koniec2 - start2
+    tablica20000 = np.array([random.randint(1, 20000) for x in range(20000)])
+    start3 = time.time()
+    lista,przypisanie3,porównanie3 = Merge_Sort21_Plus(tablica20000, 0, len(tablica20000) - 1)
+    koniec3 = time.time()
+    pomiar3 = koniec3 - start3
+    return np.array([[pomiar,przypisanie,porównanie],
+                    [pomiar2,przypisanie2,porównanie2],
+                    [pomiar3,przypisanie3,porównanie3]])
+
+def funkcja():
+    '''
+    Funkcja testująca i zwracająca
+    macierz 3 stopnia. 
+    '''
+    wynik = np.array([testIS(), testBS(), testMS()])
+    return wynik
+
+print("Zadanie 5: ", funkcja())
