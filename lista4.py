@@ -41,6 +41,33 @@ def Radix_Sort(A, k):
 print("Nieposortowana tablica:", data)
 print("Posortowana tablica Radix_Sort: ", Radix_Sort(data, 10))
 
+def Test_Radix_Sort():
+    tablica = np.random.rand(100000)
+    start = time.time()
+    sorted_array = Radix_Sort(tablica, 1)
+    end = time.time()
+    measure = end - start
+    return measure
+print("Czas działania Radix_Sort dla podstawy 1: ", Test_Radix_Sort(),"s")
+
+def Test_Radix_Sort2():
+    tablica = np.random.rand(100000)
+    start = time.time()
+    sorted_array = Radix_Sort(tablica, 10)
+    end = time.time()
+    measure = end - start
+    return measure
+print("Czas działania Radix_Sort dla podstawy 10: ", Test_Radix_Sort2(),"s")
+
+def Test_Radix_Sort3():
+    tablica = np.random.rand(100000)
+    start = time.time()
+    sorted_array = Radix_Sort(tablica, 20)
+    end = time.time()
+    measure = end - start
+    return measure
+print("Czas działania Radix_Sort dla podstawy 20: ", Test_Radix_Sort2(),"s")
+
 #Zad2
 
 print("Zadanie 2:")
