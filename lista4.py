@@ -5,16 +5,17 @@ from roboczy3 import Bubble_Sort, Merge_Sort, Quick_Sort, Heap_Sort, Insertion_S
 
 #Zad1
 
-data = [4, 2, 2, 8, 3, 3, 1]
+print("Zadanie 1:")
+data = np.random.randint(9, size=10)
 
-def Counting_Sort(A):
+def Counting_Sort(A, k):
     """
     Algorytm sortujący przez
     zliczanie.
     """
     k = max(A) + 1
-    B = [0]*len(A)
-    C = [0]*k
+    C = np.zeros(k,dtype=int)
+    B = np.zeros(len(A), dtype=int)
     for j in range(len(A)):
         C[A[j]] = C[A[j]] + 1
     for i in range(1, k):
@@ -23,19 +24,22 @@ def Counting_Sort(A):
         B[C[A[j]]-1] = A[j]
         C[A[j]] = C[A[j]] - 1
     return B
-print("Counting Sort: ", Counting_Sort(data))
 
-#Zależeć od podstawy to d.
-def Radix_Sort(A):
+def Radix_Sort(A, k):
     """
-    Algorytm sortujący
-    pozycyjnie.
+    Algorytm sortujący pozycyjnie. 
+    A jest tablicą, a k jest podstawą.
     """
-    d = max(A)
-    for i in range(d):
-        A[i] = Counting_Sort(A)
+    d_max = max(A)
+    d = 1
+    for _ in range(d):
+        if d_max//d>0:
+            A = Counting_Sort(A, k)
+            d = d + k
     return A
-print(Radix_Sort(data))
+
+print("Nieposortowana tablica:", data)
+print("Posortowana tablica Radix_Sort: ", Radix_Sort(data, 10))
 
 #Zad2
 
