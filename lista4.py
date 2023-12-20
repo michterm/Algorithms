@@ -38,6 +38,7 @@ def Radix_Sort(A, k):
             d = d + k
     return A
 
+data2 =[20, 12, 40, 32, 50]
 print("Nieposortowana tablica:", data)
 print("Posortowana tablica Radix_Sort: ", Radix_Sort(data, 10))
 
